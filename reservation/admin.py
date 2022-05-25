@@ -5,39 +5,39 @@ from .models import *
 
 # Register your models here.
 
-@admin.register(Staff)
-class StaffAdmin(admin.ModelAdmin):
-    # To show in admin app
-    list_display = (
-        'staff_id',
-        'user',
-        'first_name',
-        'middle_name',
-        'last_name',
-        'contact_no',
-        'address',
-        'email_address',
-    )
-    # Adding search bar
-    search_fields = [
-        'staff_id',
-        'user',
-        'first_name',
-        'middle_name',
-        'last_name',
-        'contact_no',
-        'address',
-        'email_address',
-    ]
-    # Categorizing the fields
-    fieldsets = (
-        ('Personal Information', {
-            'fields': ('profile_picture', ('first_name', 'middle_name', 'last_name'),)
-        }),
-        ('Contact Information', {
-            'fields': (('contact_no', 'email_address'), 'address')
-        })
-    )
+# @admin.register(Staff)
+# class StaffAdmin(admin.ModelAdmin):
+#     # To show in admin app
+#     list_display = (
+#         'staff_id',
+#         'user',
+#         'first_name',
+#         'middle_name',
+#         'last_name',
+#         'contact_no',
+#         'address',
+#         'email_address',
+#     )
+#     # Adding search bar
+#     search_fields = [
+#         'staff_id',
+#         'user',
+#         'first_name',
+#         'middle_name',
+#         'last_name',
+#         'contact_no',
+#         'address',
+#         'email_address',
+#     ]
+#     # Categorizing the fields
+#     fieldsets = (
+#         ('Personal Information', {
+#             'fields': ('profile_picture', ('first_name', 'middle_name', 'last_name'),)
+#         }),
+#         ('Contact Information', {
+#             'fields': (('contact_no', 'email_address'), 'address')
+#         })
+#     )
 
 
 @admin.register(Customer)

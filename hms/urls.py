@@ -20,8 +20,10 @@ from accounts import views as accounts_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/', include('accounts.urls'), name='accounts'),
+
     path('', include('django.contrib.auth.urls')),
     path('', accounts_views.dashboard, name='dashboard'),
+    path('accounts/', include('accounts.urls'), name='accounts'),
+    path('rooms/', include('reservation.urls'), name='reservation'),
 
 ]

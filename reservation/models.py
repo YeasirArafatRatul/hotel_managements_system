@@ -25,26 +25,6 @@ class RoomType(models.Model):
 
 
 
-class Staff(models.Model):
-    """ Model for staffs """
-    profile_picture = models.ImageField(upload_to='staff_img/', default='images/staff.png')
-    staff_id = models.AutoField(primary_key=True)
-    first_name = models.CharField(max_length=50)
-    middle_name = models.CharField(max_length=50, null=False, blank=True)
-    last_name = models.CharField(max_length=50)
-    contact_no = models.CharField(max_length=15)
-    address = models.CharField(max_length=100)
-    email_address = models.EmailField()
-    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, editable=False)
-
-    class Meta:
-        ordering = ['first_name', 'middle_name', 'last_name']
-        permissions = (("can_view_staff", "Can view staff"), ('can_view_staff_detail', 'Can view staff detail'))
-
-    def __str__(self):  # Unicode support
-        return '({0}) {1} {2}'.format(self.staff_id, self.first_name, self.last_name)
-
-
 
 class Customer(models.Model):
     """Model for customers"""
@@ -77,7 +57,7 @@ class Reservation(models.Model):
     """Models for reservations"""
     reservation_id = models.AutoField(primary_key=True)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    staff = models.ForeignKey(Staff, on_delete=models.CASCADE, editable=False)
+    staff = models.ForeignKey(User, on_delete=models.CASCADE)
     no_of_children = models.PositiveSmallIntegerField(default=0)
     no_of_adults = models.PositiveSmallIntegerField(default=1)
     reservation_date_time = models.DateTimeField(default=timezone.now)
