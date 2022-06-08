@@ -1,0 +1,19 @@
+{% extends 'base.html' %}  
+  
+{% block content %}  
+
+{% for room in available_rooms %}
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-subtitle mb-2 text-muted">Room No: {{room.room_no}}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">Type: {{ room.room_type.name }}</h6>
+        <h6 class="card-subtitle mb-2 text-muted">Price: {{ room.room_type.price }}</h6>
+        {% for facility in room.facility.all %}
+        <p class="card-text">{{ facility.name }}</p>
+        {% endfor %}
+    </div>
+  </div>
+  <br>
+{% endfor %}
+  
+{% endblock content %}  
