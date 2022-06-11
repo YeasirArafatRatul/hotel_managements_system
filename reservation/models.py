@@ -25,7 +25,6 @@ class RoomType(models.Model):
 
 
 
-
 class Customer(models.Model):
     """Model for customers"""
     customer_id = models.AutoField(primary_key=True)
@@ -52,35 +51,14 @@ class Customer(models.Model):
         return '({0}) {1} {2}'.format(self.customer_id, self.first_name, self.last_name)
 
 
-
-class Reservation(models.Model):
-    """Models for reservations"""
-    reservation_id = models.AutoField(primary_key=True)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    staff = models.ForeignKey(User, on_delete=models.CASCADE)
-    no_of_children = models.PositiveSmallIntegerField(default=0)
-    no_of_adults = models.PositiveSmallIntegerField(default=1)
-    reservation_date_time = models.DateTimeField(default=timezone.now)
-    expected_arrival_date_time = models.DateTimeField(default=timezone.now)
-    expected_departure_date_time = models.DateTimeField(default=timezone.now)
-
-    class Meta:
-        permissions = (('can_view_reservation', 'Can view reservation'),
-                       ('can_view_reservation_detail', 'Can view reservation detail'),)
-
-    def get_absolute_url(self):
-        return reverse('reservation-detail', args=str([self.reservation_id]))
-
-    def __str__(self):
-        return '({0}) {1} {2}'.format(self.reservation_id, self.customer.first_name, self.customer.last_name)
-
-
 class Room(models.Model):
-    room_no = models.CharField(max_length=10, primary_key=True)
+    """Models for rooms"""
+    room_no = models.CharField(max_length = 10, primary_key=True)
     room_type = models.ForeignKey('RoomType', null=False, blank=True, on_delete=models.CASCADE)
     availability = models.BooleanField(default=0)
-    reservation = models.ForeignKey(Reservation, null=True, blank=True, on_delete=models.SET_NULL)
     facility = models.ManyToManyField('Facility')
+    price = models.PositiveBigIntegerField(default=0)
+    image = models.ImageField(upload_to='images', default='images/default.jpg')
 
     class Meta:
         ordering = ['room_no', ]
@@ -101,10 +79,35 @@ class Room(models.Model):
     def get_absolute_url(self):
         return reverse('room-detail', args=[self.room_no])
 
-    def save(self, *args, **kwargs):  # Overriding default behaviour of save
-        if self.reservation:  # If it is reserved, than it should not be available
-            self.availability = 0
-        else:
-            self.availability = 1
+    # def save(self, *args, **kwargs):  # Overriding default behaviour of save
+    #     if self.reservation:  # If it is reserved, than it should not be available
+    #         self.availability = 0
+    #     else:
+    #         self.availability = 1
 
-        super().save(*args, **kwargs)
+    #     super().save(*args, **kwargs)
+
+
+
+class Reservation(models.Model):
+    """Models for reservations"""
+    reservation_id = models.AutoField(primary_key=True)
+    room_no = models.ForeignKey('Room', on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    staff = models.ForeignKey(User, on_delete=models.CASCADE)
+    no_of_children = models.PositiveSmallIntegerField(default=0)
+    no_of_adults = models.PositiveSmallIntegerField(default=1)
+    reservation_date_time = models.DateTimeField(default=timezone.now)
+    expected_arrival_date_time = models.DateTimeField(default=timezone.now)
+    expected_departure_date_time = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        permissions = (('can_view_reservation', 'Can view reservation'),
+                       ('can_view_reservation_detail', 'Can view reservation detail'),)
+
+    def get_absolute_url(self):
+        return reverse('reservation-detail', args=str([self.reservation_id]))
+
+    def __str__(self):
+        return '({0}) {1} {2}'.format(self.reservation_id, self.customer.first_name, self.customer.last_name)
+

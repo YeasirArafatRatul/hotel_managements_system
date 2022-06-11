@@ -1,0 +1,18 @@
+{% extends 'base.html' %}  
+  
+{% block content %}  
+
+
+<div class="container" style="width: 18rem;">
+    <div class="container-body">
+        <h4 class="container-subtitle mb-2 text-muted">Customer Name {{reservation.customer.first_name}} 
+            {{reservation.customer.middle_name}} {{reservation.customer.last_name}}</h4>
+        <h5 class="container-subtitle mb-2 text-muted">Date Time: {{ reservation.reservation_date_time }}</h5>
+        <h5 class="container-subtitle mb-2 text-muted">Booked By: {{ reservation.staff }}</h5>
+        <h5 class="container-subtitle mb-2 text-muted">Room No: {{ reservation.room_no.room_no }}</h5>
+        <h5 class="container-subtitle mb-2 text-muted">Room No: {{ reservation.room_no.room_type }}</h5>
+
+    </div>
+</div>
+  
+{% endblock content %}  

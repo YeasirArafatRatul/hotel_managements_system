@@ -90,14 +90,13 @@ class RoomAdmin(admin.ModelAdmin):
     list_display = (
         'room_no',
         'room_type',
-        'reservation',
         'availability',
         'display_facility',
     )
     # Adding filter
     list_filter = ('room_type', 'availability')
     filter_horizontal = ('facility',)
-    fields = (('room_no', 'room_type'), 'reservation', 'facility')
+    fields = (('room_no', 'room_type'), 'facility', 'availability','price', 'image')
     search_fields = [
         'reservation__customer__first_name',
         'reservation__customer__middle_name',
