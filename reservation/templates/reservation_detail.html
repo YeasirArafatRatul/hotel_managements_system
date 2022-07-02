@@ -7,11 +7,20 @@
     <div class="container-body">
         <h4 class="container-subtitle mb-2 text-muted">Customer Name {{reservation.customer.first_name}} 
             {{reservation.customer.middle_name}} {{reservation.customer.last_name}}</h4>
+        <h5> {{reservation.customer.email_address}} </h5>
         <h5 class="container-subtitle mb-2 text-muted">Date Time: {{ reservation.reservation_date_time }}</h5>
         <h5 class="container-subtitle mb-2 text-muted">Booked By: {{ reservation.staff }}</h5>
         <h5 class="container-subtitle mb-2 text-muted">Room No: {{ reservation.room_no.room_no }}</h5>
-        <h5 class="container-subtitle mb-2 text-muted">Room No: {{ reservation.room_no.room_type }}</h5>
-
+        <h5 class="container-subtitle mb-2 text-muted">Room Type: {{ reservation.room_no.room_type }}</h5>
+        <h5 class="container-subtitle mb-2 text-muted">Room Price: {{ reservation.room_no.room_type.price }}</h5>
+ 
+        {% for facility in reservation.room_no.facility.all %}
+        <p class="card-text">{{ facility.name }}</p>
+        {% endfor %}
+        
+    </div>
+  </div>
+  <br>
     </div>
 </div>
   

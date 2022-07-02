@@ -77,15 +77,9 @@ class Room(models.Model):
     display_facility.short_description = 'Facilities'
 
     def get_absolute_url(self):
-        return reverse('room-detail', args=[self.room_no])
+        return reverse("reservation:room-detail", kwargs={"room_no": self.room_no})
 
-    # def save(self, *args, **kwargs):  # Overriding default behaviour of save
-    #     if self.reservation:  # If it is reserved, than it should not be available
-    #         self.availability = 0
-    #     else:
-    #         self.availability = 1
 
-    #     super().save(*args, **kwargs)
 
 
 

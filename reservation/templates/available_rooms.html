@@ -1,8 +1,69 @@
-{% extends 'base.html' %}  
-  
-{% block content %}  
+{% extends 'base.html' %}
 
-{% for room in available_rooms %}
+{% block title %} Dashboard {% endblock %}
+
+{% block content %} 
+<div class="container-scroller">
+    <div class="container-fluid page-body-wrapper">
+    {% include "partials/_sidebar.html" %}
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Available Rooms</h4>
+                  <p class="card-description">
+                    Rooms available for reservation
+                  </p>
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+           
+                        <tr>
+                          <th>Room No</th>
+                          <th>Room Type</th>
+                          <th> Room Price</th>
+                          <th>Availability</th>
+                          <th>Facilities</th>
+                        </tr>
+               
+                      </thead>
+                      <tbody>
+                        {% for room in available_rooms %}
+                        <tr>
+                          <td>{{room.room_no}}</td>
+                          <td>{{ room.room_type.name }}</td>
+                          <td>{{ room.price }}</td>
+                          {% if room.availability == 1 %}
+                          <td> Available </td>
+                          {% else %}
+                          <td> Not Available </td>
+                          {% endif %}
+                          {% for facility in room.facility.all %}
+                              <td>{{ facility.name }}</td>
+                           {% endfor %}
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+
+{% endblock %}
+
+<!-- {% for room in available_rooms %}
 <div class="card" style="width: 18rem;">
     <div class="card-body">
         <h5 class="card-subtitle mb-2 text-muted">Room No: {{room.room_no}}</h5>
@@ -14,6 +75,4 @@
     </div>
   </div>
   <br>
-{% endfor %}
-  
-{% endblock content %}  
+{% endfor %} -->
